@@ -3,6 +3,7 @@ import 'package:muslim/core/colors_manager.dart';
 import 'package:muslim/screens/OnboardingScreens/widget/onboarding_item.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../bottom_nav_bar/main_screen.dart';
 import 'onboarding_data.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -88,7 +89,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     TextButton(
                       onPressed: () {
                         if (currentIndex == onboardingList.length - 1) {
-                          // Navigate to Home
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MainScreen(),
+                            ),
+                          );
                         } else {
                           controller.nextPage(
                             duration: const Duration(milliseconds: 300),
