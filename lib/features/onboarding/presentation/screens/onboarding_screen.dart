@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:muslim/core/colors_manager.dart';
-import 'package:muslim/screens/OnboardingScreens/widget/onboarding_item.dart';
+import 'package:muslim/core/theme/colors_manager.dart';
+import 'package:muslim/features/onboarding/presentation/widgets/onboarding_item.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../bottom_nav_bar/main_screen.dart';
-import 'onboarding_data.dart';
+import 'package:muslim/features/main_layout/presentation/screens/main_screen.dart';
+import 'package:muslim/features/onboarding/data/onboarding_data.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});

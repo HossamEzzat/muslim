@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:muslim/core/colors_manager.dart';
+import 'package:muslim/core/theme/colors_manager.dart';
 
-import '../../data/models/surah_model.dart';
-import '../../data/repositories/quran_repository.dart';
-import '../cubit/quran_cubit.dart';
+import 'package:muslim/features/quran/data/models/surah_model.dart';
+import 'package:muslim/features/quran/data/repositories/quran_repository.dart';
+import 'package:muslim/features/quran/presentation/cubit/quran_cubit.dart';
 
 class QuranScreen extends StatelessWidget {
   const QuranScreen({super.key});
@@ -46,7 +46,7 @@ class _QuranViewState extends State<_QuranView> {
             child: Image.asset(
               'assets/taj.png',
               fit: BoxFit.cover,
-              color: Colors.black.withOpacity(0.6),
+              color: Colors.black.withAlpha(153),
               colorBlendMode: BlendMode.darken,
             ),
           ),
@@ -129,7 +129,7 @@ class _QuranViewState extends State<_QuranView> {
               'assets/quran.svg',
               width: 24,
               height: 24,
-              color: ColorsManager.goldColor,
+              colorFilter: ColorFilter.mode(ColorsManager.goldColor, BlendMode.srcIn),
             ),
             // Or use: Icon(Icons.menu_book, color: ColorsManager.goldColor)
           ),
@@ -245,14 +245,14 @@ class _RecentCard extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
-                  color: ColorsManager.blackColor.withOpacity(0.85),
+                  color: ColorsManager.blackColor.withAlpha(217), // 0.85 * 255
                 ),
               ),
               Text(
                 '${surah.versesCount} Verses',
                 style: TextStyle(
                   fontSize: 14,
-                  color: ColorsManager.blackColor.withOpacity(0.7),
+                  color: ColorsManager.blackColor.withAlpha(179), // 0.7 * 255
                 ),
               ),
             ],

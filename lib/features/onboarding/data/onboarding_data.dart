@@ -1,4 +1,4 @@
-import 'models/onboarding_model.dart';
+import 'package:muslim/features/onboarding/data/models/onboarding_model.dart';
 
 List<OnBoardingModel> onboardingList = [
   OnBoardingModel(image: "assets/on1.png", title: "", description: ""),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:muslim/core/colors_manager.dart';
+import 'package:muslim/core/theme/colors_manager.dart';
 
-import '../../features/quran/presentation/screens/quran_screen.dart';
+import 'package:muslim/features/quran/presentation/screens/quran_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});

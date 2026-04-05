@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../data/models/surah_model.dart';
-import '../../data/repositories/quran_repository.dart';
+import 'package:muslim/features/quran/data/models/surah_model.dart';
+import 'package:muslim/features/quran/data/repositories/quran_repository.dart';
 
 // States
 abstract class QuranState {}

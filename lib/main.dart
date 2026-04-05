@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:muslim/screens/splash/splash_screen.dart';
+import 'package:muslim/features/splash/presentation/screens/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());

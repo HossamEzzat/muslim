@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/onboarding_model.dart';
+import 'package:muslim/features/onboarding/data/models/onboarding_model.dart';
 
 class OnboardingItem extends StatelessWidget {
   final OnBoardingModel model;

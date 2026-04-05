@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
-import '../models/surah_model.dart';
+import 'package:muslim/features/quran/data/models/surah_model.dart';
 
 class QuranRepository {
   static const _baseUrl = 'https://mp3quran.net/api/v3';

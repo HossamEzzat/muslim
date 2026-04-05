@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:muslim/screens/OnboardingScreens/onboarding_screen.dart';
+import 'package:muslim/features/onboarding/presentation/screens/onboarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
