@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:muslim/core/colors_manager.dart';
 
 import '../../data/models/surah_model.dart';
@@ -43,7 +44,7 @@ class _QuranViewState extends State<_QuranView> {
           // Background image
           Positioned.fill(
             child: Image.asset(
-              'assets/mosque_bg.png',
+              'assets/taj.png',
               fit: BoxFit.cover,
               color: Colors.black.withOpacity(0.6),
               colorBlendMode: BlendMode.darken,
@@ -110,14 +111,7 @@ class _QuranViewState extends State<_QuranView> {
   Widget _buildHeader() {
     return Padding(
       padding: const EdgeInsets.only(top: 16, bottom: 8),
-      child: Image.asset('assets/islami_logo.png', height: 80),
-      // Or use a Text widget if no logo asset:
-      // child: Text('Islami', style: TextStyle(
-      //   color: ColorsManager.goldColor,
-      //   fontSize: 42,
-      //   fontWeight: FontWeight.bold,
-      //   fontFamily: 'YourCustomFont',
-      // )),
+      child: Image.asset('assets/logo.png', height: 80),
     );
   }
 
@@ -131,8 +125,8 @@ class _QuranViewState extends State<_QuranView> {
         decoration: InputDecoration(
           prefixIcon: Padding(
             padding: const EdgeInsets.all(12),
-            child: Image.asset(
-              'assets/quran_icon.png',
+            child: SvgPicture.asset(
+              'assets/quran.svg',
               width: 24,
               height: 24,
               color: ColorsManager.goldColor,
@@ -212,7 +206,7 @@ class _RecentSurahCards extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 16),
         itemCount: suwar.length,
-        separatorBuilder: (_, __) => const SizedBox(width: 12),
+        separatorBuilder: (_, _) => const SizedBox(width: 12),
         itemBuilder: (context, index) => _RecentCard(surah: suwar[index]),
       ),
     );
@@ -270,10 +264,7 @@ class _RecentCard extends StatelessWidget {
             bottom: 0,
             child: Opacity(
               opacity: 0.35,
-              child: Image.asset(
-                'assets/quran_illustration.png',
-                fit: BoxFit.contain,
-              ),
+              child: Image.asset('assets/quranSura.png', fit: BoxFit.contain),
             ),
           ),
         ],
@@ -368,7 +359,7 @@ class _SurahNumberBadge extends StatelessWidget {
         children: [
           // Star/badge shape using CustomPaint or an asset
           Image.asset(
-            'assets/surah_badge.png', // The star-shaped badge from the design
+            'assets/sn.png', // The star-shaped badge from the design
             width: 48,
             height: 48,
             color: ColorsManager.goldColor,

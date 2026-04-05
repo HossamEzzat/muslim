@@ -31,7 +31,7 @@ class QuranError extends QuranState {
 // Cubit
 class QuranCubit extends Cubit<QuranState> {
   final QuranRepository _repository;
-  List<SurahModel> _allSuwar = [];
+  final List<SurahModel> _allSuwar = [];
 
   QuranCubit(this._repository) : super(QuranInitial());
 
