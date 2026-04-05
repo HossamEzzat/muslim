@@ -6,6 +6,7 @@ import 'package:muslim/core/theme/colors_manager.dart';
 import 'package:muslim/features/quran/data/models/surah_model.dart';
 import 'package:muslim/features/quran/data/repositories/quran_repository.dart';
 import 'package:muslim/features/quran/presentation/cubit/quran_cubit.dart';
+import 'package:muslim/features/quran/presentation/screens/surah_detail_screen.dart';
 
 class QuranScreen extends StatelessWidget {
   const QuranScreen({super.key});
@@ -285,10 +286,11 @@ class _SurahListItem extends StatelessWidget {
       children: [
         InkWell(
           onTap: () {
+            context.read<QuranCubit>().addRecentSurah(surah.id);
             // Navigate to surah detail screen
-            // Navigator.push(context, MaterialPageRoute(
-            //   builder: (_) => SurahDetailScreen(surah: surah),
-            // ));
+            Navigator.push(context, MaterialPageRoute(
+              builder: (_) => SurahDetailScreen(surah: surah),
+            ));
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),

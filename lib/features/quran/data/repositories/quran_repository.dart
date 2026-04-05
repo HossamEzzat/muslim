@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
+import 'package:muslim/features/quran/data/models/ayah_model.dart';
 import 'package:muslim/features/quran/data/models/surah_model.dart';
 
 class QuranRepository {
@@ -33,4 +34,33 @@ class QuranRepository {
       throw Exception('Something went wrong: $e');
     }
   }
+
+  Future<List<AyahModel>> getSurahDetails(int surahId) async {
+    try {
+      final response = await http
+          .get(Uri.parse('https://api.alquran.cloud/v1/surah/$surahId/quran-uthmani'))
+          .timeout(const Duration(seconds: 15));
+
+      if (response.statusCode != 200) {
+        throw Exception('Server error: ${response.statusCode}');
+      }
+
+      final jsonResponse = json.decode(response.body) as Map<String, dynamic>;
+      final data = jsonResponse['data'] as Map<String, dynamic>;
+      final ayahsList = data['ayahs'] as List<dynamic>;
+
+      return ayahsList
+          .map((e) => AyahModel.fromJson(e as Map<String, dynamic>))
+          .toList();
+    } on SocketException {
+      throw Exception('No internet connection. Please check your network.');
+    } on HttpException {
+      throw Exception('Could not reach the server. Try again later.');
+    } on FormatException {
+      throw Exception('Unexpected response format.');
+    } catch (e) {
+      throw Exception('Something went wrong: $e');
+    }
+  }
 }
+
