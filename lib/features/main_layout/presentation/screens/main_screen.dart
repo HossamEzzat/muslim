@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:muslim/core/theme/colors_manager.dart';
 
 import 'package:muslim/features/quran/presentation/screens/quran_screen.dart';
+import 'package:muslim/features/hadith/presentation/screens/hadith_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -16,7 +17,7 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Widget> _screens = [
     QuranScreen(),
-    const Center(child: Text('Hadith')),
+    const HadithScreen(),
     const Center(child: Text('Tasbih')),
     const Center(child: Text('Radio')),
     const Center(child: Text('Stats')),
