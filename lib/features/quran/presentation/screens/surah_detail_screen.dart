@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:muslim/features/quran/data/models/surah_model.dart' as my_surah;
 import 'package:quran_library/quran_library.dart';
 
@@ -14,7 +13,8 @@ class SurahDetailScreen extends StatelessWidget {
       parentContext: context,
       surahNumber: surah.id,
       isDark: true,
-      appLanguageCode: 'ar', // Set to Arabic
+      appLanguageCode: 'ar',
+      isFontsLocal: true,
     );
   }
 }

@@ -3,13 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:muslim/core/theme/colors_manager.dart';
 
-import 'package:muslim/features/hadith/data/models/hadith_model.dart';
 import 'package:muslim/features/hadith/data/models/muslim_hadith_model.dart';
-import 'package:muslim/features/hadith/data/repositories/hadith_repository.dart';
 import 'package:muslim/features/hadith/data/repositories/muslim_hadith_repository.dart';
-import 'package:muslim/features/hadith/presentation/cubit/hadith_cubit.dart';
 import 'package:muslim/features/hadith/presentation/cubit/muslim_hadith_cubit.dart';
-import 'package:muslim/features/hadith/presentation/screens/hadith_detail_screen.dart';
 import 'package:muslim/features/hadith/presentation/screens/muslim_hadith_detail_screen.dart';
 
 class HadithScreen extends StatelessWidget {
@@ -17,16 +13,8 @@ class HadithScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (_) => HadithCubit(HadithRepository())..loadSections(),
-        ),
-        BlocProvider(
-          create: (_) =>
-              MuslimHadithCubit(MuslimHadithRepository())..loadHadiths(),
-        ),
-      ],
+    return BlocProvider(
+      create: (_) => MuslimHadithCubit(MuslimHadithRepository())..loadHadiths(),
       child: const _HadithView(),
     );
   }
@@ -39,32 +27,12 @@ class _HadithView extends StatefulWidget {
   State<_HadithView> createState() => _HadithViewState();
 }
 
-class _HadithViewState extends State<_HadithView>
-    with SingleTickerProviderStateMixin {
+class _HadithViewState extends State<_HadithView> {
   final _searchController = TextEditingController();
-  late TabController _tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 2, vsync: this);
-    _tabController.addListener(_onTabChanged);
-  }
-
-  void _onTabChanged() {
-    // Clear search when switching tabs
-    if (_tabController.indexIsChanging) {
-      _searchController.clear();
-      context.read<HadithCubit>().search('');
-      context.read<MuslimHadithCubit>().search('');
-    }
-  }
 
   @override
   void dispose() {
     _searchController.dispose();
-    _tabController.removeListener(_onTabChanged);
-    _tabController.dispose();
     super.dispose();
   }
 
@@ -87,16 +55,9 @@ class _HadithViewState extends State<_HadithView>
             child: Column(
               children: [
                 _buildHeader(),
-                _buildCollectionTabs(),
                 _buildSearchBar(),
                 Expanded(
-                  child: TabBarView(
-                    controller: _tabController,
-                    children: [
-                      _buildAbuDawudTab(),
-                      _buildMuslimTab(),
-                    ],
-                  ),
+                  child: _buildMuslimTab(),
                 ),
               ],
             ),
@@ -113,53 +74,6 @@ class _HadithViewState extends State<_HadithView>
     );
   }
 
-  Widget _buildCollectionTabs() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.black.withAlpha(60),
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(
-            color: ColorsManager.goldColor.withAlpha(80),
-            width: 1,
-          ),
-        ),
-        child: TabBar(
-          controller: _tabController,
-          indicator: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                ColorsManager.goldColor,
-                ColorsManager.goldColor.withAlpha(200),
-              ],
-            ),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          indicatorSize: TabBarIndicatorSize.tab,
-          labelColor: ColorsManager.blackColor,
-          unselectedLabelColor: ColorsManager.goldColor,
-          labelStyle: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 14,
-            fontFamily: 'Amiri',
-          ),
-          unselectedLabelStyle: const TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 14,
-            fontFamily: 'Amiri',
-          ),
-          dividerColor: Colors.transparent,
-          padding: const EdgeInsets.all(4),
-          tabs: const [
-            Tab(text: 'سنن أبي داود'),
-            Tab(text: 'صحيح مسلم'),
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget _buildSearchBar() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -167,11 +81,7 @@ class _HadithViewState extends State<_HadithView>
         controller: _searchController,
         style: const TextStyle(color: Colors.white),
         onChanged: (q) {
-          if (_tabController.index == 0) {
-            context.read<HadithCubit>().search(q);
-          } else {
-            context.read<MuslimHadithCubit>().search(q);
-          }
+          context.read<MuslimHadithCubit>().search(q);
         },
         decoration: InputDecoration(
           prefixIcon: Padding(
@@ -200,68 +110,6 @@ class _HadithViewState extends State<_HadithView>
           ),
         ),
       ),
-    );
-  }
-
-  // ─── Abu Dawud Tab ───────────────────────────────────────────────────────
-
-  Widget _buildAbuDawudTab() {
-    return BlocBuilder<HadithCubit, HadithState>(
-      builder: (context, state) {
-        if (state is HadithLoading) {
-          return Center(
-            child: CircularProgressIndicator(
-              color: ColorsManager.goldColor,
-            ),
-          );
-        }
-        if (state is HadithError) {
-          return _buildErrorWidget(
-            message: state.message,
-            onRetry: () => context.read<HadithCubit>().loadSections(),
-          );
-        }
-        if (state is HadithSectionsLoaded) {
-          return _buildAbuDawudContent(context, state);
-        }
-        return const SizedBox();
-      },
-    );
-  }
-
-  Widget _buildAbuDawudContent(
-      BuildContext context, HadithSectionsLoaded state) {
-    return CustomScrollView(
-      slivers: [
-        // Collection name header
-        SliverToBoxAdapter(
-          child: _SectionHeader(title: 'سنن أبي داود'),
-        ),
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text(
-              '${state.filteredSections.length} كتاب',
-              style: TextStyle(
-                color: ColorsManager.goldColor,
-                fontSize: 14,
-              ),
-            ),
-          ),
-        ),
-        const SliverToBoxAdapter(child: SizedBox(height: 8)),
-        // Sections list
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, index) {
-              final section = state.filteredSections[index];
-              return _SectionListItem(section: section);
-            },
-            childCount: state.filteredSections.length,
-          ),
-        ),
-        const SliverToBoxAdapter(child: SizedBox(height: 16)),
-      ],
     );
   }
 
@@ -387,88 +235,6 @@ class _SectionHeader extends StatelessWidget {
           fontSize: 22,
           fontWeight: FontWeight.bold,
           fontFamily: 'Amiri',
-        ),
-      ),
-    );
-  }
-}
-
-// ─── Abu Dawud Section List Item ─────────────────────────────────────────────
-
-class _SectionListItem extends StatelessWidget {
-  final HadithSectionModel section;
-  const _SectionListItem({required this.section});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white.withAlpha(15),
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: Colors.white.withAlpha(20), width: 1),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withAlpha(30),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(16),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => HadithDetailScreen(section: section),
-              ),
-            );
-          },
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-            child: Row(
-              children: [
-                // Number badge
-                _SectionNumberBadge(number: section.id),
-                const SizedBox(width: 16),
-                // Section name + hadith count
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        HadithRepository.arabicSections[section.id] ?? section.name,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Amiri',
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        '${section.hadithCount} حديث',
-                        style: TextStyle(
-                          color: ColorsManager.goldColor.withAlpha(220),
-                          fontSize: 13,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                // Arrow icon
-                Icon(
-                  Icons.arrow_forward_ios,
-                  color: ColorsManager.goldColor.withAlpha(200),
-                  size: 16,
-                ),
-              ],
-            ),
-          ),
         ),
       ),
     );

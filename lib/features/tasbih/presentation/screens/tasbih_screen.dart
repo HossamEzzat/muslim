@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:muslim/core/theme/colors_manager.dart';
-import 'dart:math' as math;
 
 class TasbihScreen extends StatefulWidget {
   const TasbihScreen({super.key});
@@ -20,6 +19,9 @@ class _TasbihScreenState extends State<TasbihScreen>
     'الحمد لله',
     'الله أكبر',
     'لا إله إلا الله',
+    'استغفر الله العظيم',
+    "صلي علي محمد",
+    "سبحان الله وبحمده",
   ];
 
   void _increment() {
@@ -81,7 +83,7 @@ class _TasbihScreenState extends State<TasbihScreen>
                                 Image.asset(
                                   'assets/sebha/head_sebha.png',
                                   height: 100,
-                                  errorBuilder: (_, __, ___) =>
+                                  errorBuilder: (context, error, stackTrace) =>
                                       const SizedBox(height: 100),
                                 ),
                                 // Rotating Body
@@ -93,12 +95,14 @@ class _TasbihScreenState extends State<TasbihScreen>
                                     'assets/sebha/body_sebha.png',
                                     width: 320,
                                     height: 320,
-                                    errorBuilder: (_, __, ___) => Image.asset(
-                                      'assets/images/quran_sura.png',
-                                      width: 320,
-                                      height: 320,
-                                      color: ColorsManager.goldColor,
-                                    ),
+                                    errorBuilder:
+                                        (context, error, stackTrace) =>
+                                            Image.asset(
+                                              'assets/images/quran_sura.png',
+                                              width: 320,
+                                              height: 320,
+                                              color: ColorsManager.goldColor,
+                                            ),
                                   ),
                                 ),
                               ],

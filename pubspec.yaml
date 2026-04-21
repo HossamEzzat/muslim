@@ -39,7 +39,8 @@ dependencies:
   http: ^1.6.0
   flutter_bloc: ^9.1.1
   shared_preferences: ^2.5.5
-  quran_library: ^3.1.0
+  quran_library:
+    path: ./quran_library_cache
   get: ^4.7.3
   google_fonts: ^8.0.2
 
@@ -72,6 +73,7 @@ flutter:
     - assets/icons/
     - assets/onboarding/
     - assets/sebha/
+    - assets/jsons/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

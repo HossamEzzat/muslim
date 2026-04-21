@@ -40,12 +40,6 @@ class QuranCubit extends Cubit<QuranState> {
   Future<void> loadSuwar() async {
     emit(QuranLoading());
     try {
-      // Quick connectivity check
-      final result = await InternetAddress.lookup('mp3quran.net');
-      if (result.isEmpty || result[0].rawAddress.isEmpty) {
-        emit(QuranError('No internet connection'));
-        return;
-      }
       final suwar = await _repository.getSuwar();
       _allSuwar.clear();
       _allSuwar.addAll(suwar);

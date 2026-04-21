@@ -667,10 +667,9 @@ packages:
   quran_library:
     dependency: "direct main"
     description:
-      name: quran_library
-      sha256: "8a008ccc38b7f47cec807d091f227ba9a404f24adad766cbd5425e77b3a41ae7"
-      url: "https://pub.dev"
-    source: hosted
+      path: quran_library_cache
+      relative: true
+    source: path
     version: "3.2.3"
   rxdart:
     dependency: transitive

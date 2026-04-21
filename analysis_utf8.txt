@@ -1,0 +1,24 @@
+﻿Analyzing muslim...                                             
+
+warning - Unused import: 'dart:io' - lib\features\hadith\data\repositories\hadith_repository.dart:2:8 - unused_import
+warning - Unused import: 'dart:io' - lib\features\hadith\data\repositories\muslim_hadith_repository.dart:2:8 - unused_import
+warning - Unused import: 'dart:io' - lib\features\quran\presentation\cubit\surah_detail_cubit.dart:4:8 - unused_import
+warning - Unused import: 'dart:math' - lib\features\tasbih\presentation\screens\tasbih_screen.dart:3:8 - unused_import
+   info - Unnecessary use of multiple underscores - lib\features\tasbih\presentation\screens\tasbih_screen.dart:84:53 - unnecessary_underscores
+   info - Unnecessary use of multiple underscores - lib\features\tasbih\presentation\screens\tasbih_screen.dart:84:57 - unnecessary_underscores
+   info - Unnecessary use of multiple underscores - lib\features\tasbih\presentation\screens\tasbih_screen.dart:96:55 - unnecessary_underscores
+   info - Unnecessary use of multiple underscores - lib\features\tasbih\presentation\screens\tasbih_screen.dart:96:59 - unnecessary_underscores
+   info - 'defaultFontText' is deprecated and shouldn't be used. ╪º╪│╪¬╪«╪»┘à recitationNames ╪¿╪»┘ä┘ï╪º ┘à┘å defaultFontText - quran_library_cache\lib\src\quran\data\models\quran_fonts_models\download_fonts_dialog_style.dart:210:50 - deprecated_member_use_from_same_package
+   info - 'downloadedFontsText' is deprecated and shouldn't be used. ╪º╪│╪¬╪«╪»┘à recitationNames ╪¿╪»┘ä┘ï╪º ┘à┘å downloadedFontsText - quran_library_cache\lib\src\quran\data\models\quran_fonts_models\download_fonts_dialog_style.dart:212:58 - deprecated_member_use_from_same_package
+   info - 'defaultFontText' is deprecated and shouldn't be used. ╪º╪│╪¬╪«╪»┘à recitationNames ╪¿╪»┘ä┘ï╪º ┘à┘å defaultFontText - quran_library_cache\lib\src\quran\presentation\widgets\fonts_download_widget.dart:414:30 - deprecated_member_use_from_same_package
+   info - 'defaultFontText' is deprecated and shouldn't be used. ╪º╪│╪¬╪«╪»┘à recitationNames ╪¿╪»┘ä┘ï╪º ┘à┘å defaultFontText - quran_library_cache\lib\src\quran\presentation\widgets\fonts_download_widget.dart:415:21 - deprecated_member_use_from_same_package
+   info - 'downloadedFontsText' is deprecated and shouldn't be used. ╪º╪│╪¬╪«╪»┘à recitationNames ╪¿╪»┘ä┘ï╪º ┘à┘å downloadedFontsText - quran_library_cache\lib\src\quran\presentation\widgets\fonts_download_widget.dart:417:30 - deprecated_member_use_from_same_package
+   info - 'downloadedFontsText' is deprecated and shouldn't be used. ╪º╪│╪¬╪«╪»┘à recitationNames ╪¿╪»┘ä┘ï╪º ┘à┘å downloadedFontsText - quran_library_cache\lib\src\quran\presentation\widgets\fonts_download_widget.dart:418:21 - deprecated_member_use_from_same_package
+
+flutter : 14 issues found. (ran in 9.4s)
+At line:1 char:1
++ flutter analyze > analysis_full.txt 2>&1 --no-pub
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (14 issues found. (ran in 9.4s):String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
