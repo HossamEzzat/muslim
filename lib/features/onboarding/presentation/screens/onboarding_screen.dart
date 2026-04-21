@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:muslim/core/theme/colors_manager.dart';
 import 'package:muslim/features/onboarding/presentation/widgets/onboarding_item.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import 'package:muslim/features/main_layout/presentation/screens/main_screen.dart';
@@ -30,7 +31,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               /// Logo
               Padding(
                 padding: const EdgeInsets.only(top: 20),
-                child: Image.asset("assets/logo.png", height: 100),
+                child: Image.asset("assets/images/logo.png", height: 100),
               ),
 
               /// Pages
@@ -78,7 +79,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         );
                       },
                       child: const Text(
-                        "Back",
+                        "السابق",
                         style: TextStyle(
                           color: Color(0xffE2BE7F),
                           fontSize: 16,
@@ -87,14 +88,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
 
                     TextButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if (currentIndex == onboardingList.length - 1) {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MainScreen(),
-                            ),
-                          );
+                          final prefs = await SharedPreferences.getInstance();
+                          await prefs.setBool('hasSeenOnboarding', true);
+                          if (context.mounted) {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MainScreen(),
+                              ),
+                            );
+                          }
                         } else {
                           controller.nextPage(
                             duration: const Duration(milliseconds: 300),
@@ -104,8 +109,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       },
                       child: Text(
                         currentIndex == onboardingList.length - 1
-                            ? "Finish"
-                            : "Next",
+                            ? "إنهاء"
+                            : "التالي",
                         style: const TextStyle(
                           color: Color(0xffE2BE7F),
                           fontSize: 16,

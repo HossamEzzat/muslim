@@ -52,7 +52,7 @@ class _HadithDetailViewState extends State<_HadithDetailView> {
           // Background image
           Positioned.fill(
             child: Image.asset(
-              'assets/taj.png',
+              'assets/images/taj.png',
               fit: BoxFit.cover,
               color: Colors.black.withAlpha(153),
               colorBlendMode: BlendMode.darken,
@@ -94,7 +94,7 @@ class _HadithDetailViewState extends State<_HadithDetailView> {
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: ColorsManager.goldColor,
                                 ),
-                                child: const Text('Retry'),
+                                child: const Text('إعادة المحاولة'),
                               ),
                             ],
                           ),
@@ -126,7 +126,7 @@ class _HadithDetailViewState extends State<_HadithDetailView> {
           ),
           Expanded(
             child: Text(
-              widget.section.name,
+              HadithRepository.arabicSections[widget.section.id] ?? widget.section.name,
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 16,
@@ -146,10 +146,10 @@ class _HadithDetailViewState extends State<_HadithDetailView> {
   Widget _buildSectionInfo() {
     return BlocBuilder<HadithDetailCubit, HadithDetailState>(
       builder: (context, state) {
-        String info = 'Loading...';
+        String info = 'جاري التحميل...';
         if (state is HadithDetailLoaded) {
           info =
-              'Hadith ${state.currentIndex + 1} of ${state.hadiths.length}';
+              'الحديث ${state.currentIndex + 1} من ${state.hadiths.length}';
         }
         return Padding(
           padding: const EdgeInsets.only(bottom: 8),
@@ -171,7 +171,7 @@ class _HadithDetailViewState extends State<_HadithDetailView> {
     if (state.hadiths.isEmpty) {
       return const Center(
         child: Text(
-          'No hadiths found in this section.',
+          'لا توجد أحاديث في هذا القسم.',
           style: TextStyle(color: Colors.white70),
         ),
       );
@@ -232,7 +232,7 @@ class _HadithCard extends StatelessWidget {
               child: Opacity(
                 opacity: 0.15,
                 child: Image.asset(
-                  'assets/quranSura.png',
+                  'assets/images/quran_sura.png',
                   width: 200,
                   height: 200,
                   fit: BoxFit.contain,
@@ -313,7 +313,7 @@ class _HadithCard extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: Text(
-                                  '${g.name}: ${g.grade}',
+                                  '${_translateName(g.name)}: ${_translateGrade(g.grade)}',
                                   style: const TextStyle(
                                     fontSize: 11,
                                     color: Colors.white,
@@ -329,7 +329,7 @@ class _HadithCard extends StatelessWidget {
                   const SizedBox(height: 8),
                   // Hadith reference
                   Text(
-                    'Hadith #${hadith.hadithNumber}',
+                    'رقم الحديث #${hadith.hadithNumber}',
                     style: TextStyle(
                       fontSize: 12,
                       color: ColorsManager.blackColor.withAlpha(153),
@@ -353,6 +353,23 @@ class _HadithCard extends StatelessWidget {
       return const Color(0xFFC62828);
     }
     return const Color(0xFF616161);
+  }
+
+  String _translateGrade(String grade) {
+    final lower = grade.toLowerCase();
+    if (lower.contains('sahih')) return 'صحيح';
+    if (lower.contains('hasan')) return 'حسن';
+    if (lower.contains('daif')) return 'ضعيف';
+    if (lower.contains('munkar')) return 'منكر';
+    if (lower.contains('mawdu')) return 'موضوع';
+    return grade;
+  }
+
+  String _translateName(String name) {
+    if (name.toLowerCase().contains('albani')) return 'الألباني';
+    if (name.toLowerCase().contains('shuaib')) return 'شعيب الأرناؤوط';
+    if (name.toLowerCase().contains('zubair')) return 'زبير علي زئي';
+    return name;
   }
 
   String _toArabicNumber(int number) {

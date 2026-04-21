@@ -45,7 +45,7 @@ class _QuranViewState extends State<_QuranView> {
           // Background image
           Positioned.fill(
             child: Image.asset(
-              'assets/taj.png',
+              'assets/images/taj.png',
               fit: BoxFit.cover,
               color: Colors.black.withAlpha(153),
               colorBlendMode: BlendMode.darken,
@@ -88,7 +88,7 @@ class _QuranViewState extends State<_QuranView> {
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: ColorsManager.goldColor,
                                 ),
-                                child: const Text('Retry'),
+                                child: const Text('إعادة المحاولة'),
                               ),
                             ],
                           ),
@@ -112,7 +112,7 @@ class _QuranViewState extends State<_QuranView> {
   Widget _buildHeader() {
     return Padding(
       padding: const EdgeInsets.only(top: 16, bottom: 8),
-      child: Image.asset('assets/logo.png', height: 80),
+      child: Image.asset('assets/images/logo.png', height: 80),
     );
   }
 
@@ -127,14 +127,14 @@ class _QuranViewState extends State<_QuranView> {
           prefixIcon: Padding(
             padding: const EdgeInsets.all(12),
             child: SvgPicture.asset(
-              'assets/quran.svg',
+              'assets/icons/quran.svg',
               width: 24,
               height: 24,
               colorFilter: ColorFilter.mode(ColorsManager.goldColor, BlendMode.srcIn),
             ),
             // Or use: Icon(Icons.menu_book, color: ColorsManager.goldColor)
           ),
-          hintText: 'Sura Name',
+          hintText: 'اسم السورة...',
           hintStyle: const TextStyle(color: Colors.white54, fontSize: 16),
           filled: true,
           fillColor: Colors.transparent,
@@ -155,10 +155,10 @@ class _QuranViewState extends State<_QuranView> {
     return CustomScrollView(
       slivers: [
         // Recently Read Section
-        SliverToBoxAdapter(child: _SectionHeader(title: 'Most Recently')),
+        SliverToBoxAdapter(child: _SectionHeader(title: 'آخر قراءة')),
         SliverToBoxAdapter(child: _RecentSurahCards(suwar: state.recentSuwar)),
         // Suras List Section
-        SliverToBoxAdapter(child: _SectionHeader(title: 'Suras List')),
+        SliverToBoxAdapter(child: _SectionHeader(title: 'قائمة السور')),
         SliverList(
           delegate: SliverChildBuilderDelegate((context, index) {
             final surah = state.filteredSuwar[index];
@@ -220,37 +220,41 @@ class _RecentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 220,
-      decoration: BoxDecoration(
-        color: ColorsManager.goldColor,
+    return Material(
+      color: ColorsManager.goldColor,
+      borderRadius: BorderRadius.circular(16),
+      child: InkWell(
         borderRadius: BorderRadius.circular(16),
-      ),
-      padding: const EdgeInsets.all(16),
-      child: Stack(
+        onTap: () {
+          // If they tap again, we also track it as recently read to advance it
+          // context.read<QuranCubit>().addRecentSurah(surah.id); // Optional
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => SurahDetailScreen(surah: surah),
+            ),
+          );
+        },
+        child: Container(
+          width: 220,
+          padding: const EdgeInsets.all(16),
+          child: Stack(
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                surah.name,
+                'سورة ${surah.arabicName}',
                 style: TextStyle(
-                  fontSize: 22,
+                  fontSize: 24,
                   fontWeight: FontWeight.bold,
                   color: ColorsManager.blackColor,
+                  fontFamily: 'Amiri',
                 ),
               ),
               Text(
-                surah.arabicName,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: ColorsManager.blackColor.withAlpha(217), // 0.85 * 255
-                ),
-              ),
-              Text(
-                '${surah.versesCount} Verses',
+                'آيات: ${surah.versesCount}',
                 style: TextStyle(
                   fontSize: 14,
                   color: ColorsManager.blackColor.withAlpha(179), // 0.7 * 255
@@ -265,13 +269,15 @@ class _RecentCard extends StatelessWidget {
             bottom: 0,
             child: Opacity(
               opacity: 0.35,
-              child: Image.asset('assets/quranSura.png', fit: BoxFit.contain),
+              child: Image.asset('assets/images/quran_sura.png', fit: BoxFit.contain),
             ),
           ),
         ],
       ),
-    );
-  }
+    ),
+  ),
+);
+}
 }
 
 // ─── Surah List Item ─────────────────────────────────────────────────────────
@@ -282,9 +288,23 @@ class _SurahListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        InkWell(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white.withAlpha(15),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: Colors.white.withAlpha(20), width: 1),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withAlpha(30),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
           onTap: () {
             context.read<QuranCubit>().addRecentSurah(surah.id);
             // Navigate to surah detail screen
@@ -299,50 +319,42 @@ class _SurahListItem extends StatelessWidget {
                 // Number badge
                 _SurahNumberBadge(number: surah.id),
                 const SizedBox(width: 16),
-                // English name + verse count
+                // Arabic name + verse count
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        surah.name,
+                        'سورة ${surah.arabicName}',
                         style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 17,
-                          fontWeight: FontWeight.w600,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Amiri',
                         ),
                       ),
-                      const SizedBox(height: 2),
+                      const SizedBox(height: 4),
                       Text(
-                        '${surah.versesCount} Verses',
-                        style: const TextStyle(
-                          color: Colors.white54,
+                        'آيات: ${surah.versesCount}',
+                        style: TextStyle(
+                          color: ColorsManager.goldColor.withAlpha(220),
                           fontSize: 13,
                         ),
                       ),
                     ],
                   ),
                 ),
-                // Arabic name
-                Text(
-                  surah.arabicName,
-                  style: const TextStyle(
-                    color: Colors.white70,
-                    fontSize: 18,
-                    fontFamily: 'Amiri', // Use an Arabic font
-                  ),
+                // Arrow icon
+                Icon(
+                  Icons.arrow_forward_ios,
+                  color: ColorsManager.goldColor.withAlpha(200),
+                  size: 16,
                 ),
               ],
             ),
           ),
         ),
-        const Divider(
-          color: Colors.white12,
-          height: 1,
-          indent: 16,
-          endIndent: 16,
-        ),
-      ],
+      ),
     );
   }
 }
@@ -361,7 +373,7 @@ class _SurahNumberBadge extends StatelessWidget {
         children: [
           // Star/badge shape using CustomPaint or an asset
           Image.asset(
-            'assets/sn.png', // The star-shaped badge from the design
+            'assets/images/star_badge.png', // The star-shaped badge from the design
             width: 48,
             height: 48,
             color: ColorsManager.goldColor,

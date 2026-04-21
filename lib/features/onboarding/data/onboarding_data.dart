@@ -1,26 +1,26 @@
 import 'package:muslim/features/onboarding/data/models/onboarding_model.dart';
 
 List<OnBoardingModel> onboardingList = [
-  OnBoardingModel(image: "assets/on1.png", title: "", description: ""),
+  OnBoardingModel(image: "assets/onboarding/on1.png", title: "", description: ""),
   OnBoardingModel(
-    image: "assets/on2.png",
-    title: "Welcome To Islami",
-    description: "We Are Very Excited To Have You In Our Community",
+    image: "assets/onboarding/on2.png",
+    title: "مرحباً بك في إسلامي",
+    description: "نحن سعداء جداً بانضمامك لمجتمعنا",
   ),
   OnBoardingModel(
-    image: "assets/on3.png",
-    title: "Reading the Quran",
-    description: "Read, and your Lord is the Most Generous",
+    image: "assets/onboarding/on3.png",
+    title: "قراءة القرآن",
+    description: "اقرأ وربّك الأكرم",
   ),
   OnBoardingModel(
-    image: "assets/on4.png",
-    title: "Bearish",
-    description: "Praise the name of your Lord, the Most High",
+    image: "assets/onboarding/on4.png",
+    title: "التسبيح",
+    description: "سبّح اسم ربك الأعلى",
   ),
   OnBoardingModel(
-    image: "assets/on5.png",
-    title: "Holy Quran Radio",
+    image: "assets/onboarding/on5.png",
+    title: "إذاعة القرآن الكريم",
     description:
-        "You can listen to the Holy Quran Radio through the application for free and easily",
+        "يمكنك الاستماع إلى إذاعة القرآن الكريم عبر التطبيق مجاناً وبكل سهولة",
   ),
 ];

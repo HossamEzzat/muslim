@@ -67,7 +67,7 @@ class _MuslimHadithDetailViewState extends State<_MuslimHadithDetailView> {
           // Background image
           Positioned.fill(
             child: Image.asset(
-              'assets/taj.png',
+              'assets/images/taj.png',
               fit: BoxFit.cover,
               color: Colors.black.withAlpha(153),
               colorBlendMode: BlendMode.darken,
@@ -120,7 +120,7 @@ class _MuslimHadithDetailViewState extends State<_MuslimHadithDetailView> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: Text(
-        'Hadith ${_currentIndex + 1} of ${widget.allHadiths.length}',
+        'الحديث ${_currentIndex + 1} من ${widget.allHadiths.length}',
         style: TextStyle(
           color: ColorsManager.goldColor,
           fontSize: 14,
@@ -134,7 +134,7 @@ class _MuslimHadithDetailViewState extends State<_MuslimHadithDetailView> {
     if (widget.allHadiths.isEmpty) {
       return const Center(
         child: Text(
-          'No hadiths found.',
+          'لا توجد أحاديث.',
           style: TextStyle(color: Colors.white70),
         ),
       );
@@ -198,7 +198,7 @@ class _MuslimHadithCard extends StatelessWidget {
               child: Opacity(
                 opacity: 0.15,
                 child: Image.asset(
-                  'assets/quranSura.png',
+                  'assets/images/quran_sura.png',
                   width: 200,
                   height: 200,
                   fit: BoxFit.contain,
@@ -248,46 +248,7 @@ class _MuslimHadithCard extends StatelessWidget {
                             textAlign: TextAlign.justify,
                             textDirection: TextDirection.rtl,
                           ),
-                          const SizedBox(height: 16),
-                          // Divider
-                          Container(
-                            height: 1,
-                            color: ColorsManager.blackColor.withAlpha(40),
-                          ),
-                          const SizedBox(height: 16),
-                          // Translation
-                          Container(
-                            padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              color: ColorsManager.blackColor.withAlpha(25),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'الترجمة',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: ColorsManager.blackColor,
-                                    fontFamily: 'Amiri',
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  hadith.id,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    height: 1.8,
-                                    color: ColorsManager.blackColor
-                                        .withAlpha(200),
-                                  ),
-                                  textAlign: TextAlign.start,
-                                ),
-                              ],
-                            ),
-                          ),
+                           // Removed translation box for arabic only mode
                         ],
                       ),
                     ),
@@ -295,7 +256,7 @@ class _MuslimHadithCard extends StatelessWidget {
                   const SizedBox(height: 8),
                   // Hadith reference
                   Text(
-                    'HR. Muslim #${hadith.number}',
+                    'رواه مسلم #${hadith.number}',
                     style: TextStyle(
                       fontSize: 12,
                       color: ColorsManager.blackColor.withAlpha(153),

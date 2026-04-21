@@ -77,7 +77,7 @@ class _HadithViewState extends State<_HadithView>
           // Background image
           Positioned.fill(
             child: Image.asset(
-              'assets/taj.png',
+              'assets/images/taj.png',
               fit: BoxFit.cover,
               color: Colors.black.withAlpha(153),
               colorBlendMode: BlendMode.darken,
@@ -109,7 +109,7 @@ class _HadithViewState extends State<_HadithView>
   Widget _buildHeader() {
     return Padding(
       padding: const EdgeInsets.only(top: 16, bottom: 8),
-      child: Image.asset('assets/logo.png', height: 80),
+      child: Image.asset('assets/images/logo.png', height: 80),
     );
   }
 
@@ -177,14 +177,14 @@ class _HadithViewState extends State<_HadithView>
           prefixIcon: Padding(
             padding: const EdgeInsets.all(12),
             child: SvgPicture.asset(
-              'assets/hadith.svg',
+              'assets/icons/hadith.svg',
               width: 24,
               height: 24,
               colorFilter: ColorFilter.mode(
                   ColorsManager.goldColor, BlendMode.srcIn),
             ),
           ),
-          hintText: 'Hadith Name',
+          hintText: 'ابحث عن حديث...',
           hintStyle: const TextStyle(color: Colors.white54, fontSize: 16),
           filled: true,
           fillColor: Colors.transparent,
@@ -241,7 +241,7 @@ class _HadithViewState extends State<_HadithView>
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Text(
-              '${state.filteredSections.length} Books',
+              '${state.filteredSections.length} كتاب',
               style: TextStyle(
                 color: ColorsManager.goldColor,
                 fontSize: 14,
@@ -304,7 +304,7 @@ class _HadithViewState extends State<_HadithView>
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Text(
-              '${state.filteredHadiths.length} Hadiths',
+              '${state.filteredHadiths.length} حديث',
               style: TextStyle(
                 color: ColorsManager.goldColor,
                 fontSize: 14,
@@ -362,7 +362,7 @@ class _HadithViewState extends State<_HadithView>
             style: ElevatedButton.styleFrom(
               backgroundColor: ColorsManager.goldColor,
             ),
-            child: const Text('Retry'),
+            child: const Text('إعادة المحاولة'),
           ),
         ],
       ),
@@ -401,9 +401,23 @@ class _SectionListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        InkWell(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white.withAlpha(15),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: Colors.white.withAlpha(20), width: 1),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withAlpha(30),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
           onTap: () {
             Navigator.push(
               context,
@@ -413,8 +427,7 @@ class _SectionListItem extends StatelessWidget {
             );
           },
           child: Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
             child: Row(
               children: [
                 // Number badge
@@ -426,20 +439,21 @@ class _SectionListItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        section.name,
+                        HadithRepository.arabicSections[section.id] ?? section.name,
                         style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Amiri',
                         ),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        '${section.hadithCount} Hadiths',
-                        style: const TextStyle(
-                          color: Colors.white54,
+                        '${section.hadithCount} حديث',
+                        style: TextStyle(
+                          color: ColorsManager.goldColor.withAlpha(220),
                           fontSize: 13,
                         ),
                       ),
@@ -449,20 +463,14 @@ class _SectionListItem extends StatelessWidget {
                 // Arrow icon
                 Icon(
                   Icons.arrow_forward_ios,
-                  color: ColorsManager.goldColor,
+                  color: ColorsManager.goldColor.withAlpha(200),
                   size: 16,
                 ),
               ],
             ),
           ),
         ),
-        const Divider(
-          color: Colors.white12,
-          height: 1,
-          indent: 16,
-          endIndent: 16,
-        ),
-      ],
+      ),
     );
   }
 }
@@ -482,9 +490,23 @@ class _MuslimHadithListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        InkWell(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white.withAlpha(15),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: Colors.white.withAlpha(20), width: 1),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withAlpha(30),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
           onTap: () {
             Navigator.push(
               context,
@@ -498,8 +520,7 @@ class _MuslimHadithListItem extends StatelessWidget {
             );
           },
           child: Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
             child: Row(
               children: [
                 // Number badge
@@ -514,19 +535,19 @@ class _MuslimHadithListItem extends StatelessWidget {
                         hadith.arab,
                         style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
                           fontFamily: 'Amiri',
                         ),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         textDirection: TextDirection.rtl,
                       ),
-                      const SizedBox(height: 4),
+                      const SizedBox(height: 6),
                       Text(
-                        'Hadith #${hadith.number}',
-                        style: const TextStyle(
-                          color: Colors.white54,
+                        'رقم الحديث ${hadith.number}',
+                        style: TextStyle(
+                          color: ColorsManager.goldColor.withAlpha(220),
                           fontSize: 13,
                         ),
                       ),
@@ -536,20 +557,14 @@ class _MuslimHadithListItem extends StatelessWidget {
                 // Arrow icon
                 Icon(
                   Icons.arrow_forward_ios,
-                  color: ColorsManager.goldColor,
+                  color: ColorsManager.goldColor.withAlpha(200),
                   size: 16,
                 ),
               ],
             ),
           ),
         ),
-        const Divider(
-          color: Colors.white12,
-          height: 1,
-          indent: 16,
-          endIndent: 16,
-        ),
-      ],
+      ),
     );
   }
 }
@@ -569,7 +584,7 @@ class _SectionNumberBadge extends StatelessWidget {
         alignment: Alignment.center,
         children: [
           Image.asset(
-            'assets/sn.png',
+            'assets/images/star_badge.png',
             width: 48,
             height: 48,
             color: ColorsManager.goldColor,
