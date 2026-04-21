@@ -2,37 +2,47 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:muslim/features/hadith/data/models/hadith_model.dart';
 
 class HadithRepository {
   static const _apiUrl =
       'https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/ara-abudawud.min.json';
+  static const _cacheKey = 'cached_abudawud_hadiths';
 
   Map<String, dynamic>? _cachedData;
 
   Future<Map<String, dynamic>> _fetchData() async {
     if (_cachedData != null) return _cachedData!;
 
+    final prefs = await SharedPreferences.getInstance();
+
     try {
       final response = await http
           .get(Uri.parse(_apiUrl))
           .timeout(const Duration(seconds: 30));
 
-      if (response.statusCode != 200) {
+      if (response.statusCode == 200) {
+        _cachedData = json.decode(response.body) as Map<String, dynamic>;
+        // Save to cache
+        await prefs.setString(_cacheKey, response.body);
+        return _cachedData!;
+      } else {
         throw Exception('Server error: ${response.statusCode}');
       }
-
-      _cachedData = json.decode(response.body) as Map<String, dynamic>;
-      return _cachedData!;
-    } on SocketException {
-      throw Exception('No internet connection. Please check your network.');
-    } on HttpException {
-      throw Exception('Could not reach the server. Try again later.');
-    } on FormatException {
-      throw Exception('Unexpected response format.');
     } catch (e) {
-      throw Exception('Something went wrong: $e');
+      // Fallback to cache
+      final cachedString = prefs.getString(_cacheKey);
+      if (cachedString != null) {
+        _cachedData = json.decode(cachedString) as Map<String, dynamic>;
+        return _cachedData!;
+      }
+      
+      if (e is SocketException) {
+        throw Exception('No internet connection and no cached data.');
+      }
+      rethrow;
     }
   }
 
